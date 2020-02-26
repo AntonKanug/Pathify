@@ -39,8 +39,8 @@ export class Search extends Component {
                 </IconButton>
                 <InputBase
                     style={{width:'350px', opacity:1}}
-                    placeholder="Search Google Maps"
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    placeholder="Search Pathify"
+                    inputProps={{ 'aria-label': 'Enter Points' }}
                 />
                 <IconButton type="submit" aria-label="search" >
                     <SearchIcon />
