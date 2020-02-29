@@ -19,7 +19,13 @@ export class Map extends Component {
         }
     }
     render() {
-
+        var data = [
+            { latitude: 37.8025259, longitude: -122.4351431 },
+            { latitude: 37.7896386, longitude: -122.421646 },
+            { latitude: 37.7665248, longitude: -122.4161628 },
+            { latitude: 37.7734153, longitude: -122.4577787 },
+            { latitude: 37.7948605, longitude: -122.4596065 }
+        ]
         return (
             <div>
                 <ReactMapGL
@@ -28,7 +34,7 @@ export class Map extends Component {
                     mapboxApiAccessToken={"pk.eyJ1IjoiYW50b25kaWxvbiIsImEiOiJjazZmNHA1bWoxNHoyM29td2k1MjVncm16In0.k99zSrB13Geh7G_bU-GZzw"}
                     onViewportChange={(viewport) => this.setState({viewport})}    
                 >
-                    <Marker  longitude={-122.4376} latitude={37.7577}>
+                    <Marker  longitude={data[0].longitude} latitude={data[0].latitude}>
                     <svg
                     height={SIZE}
                     viewBox="0 0 24 24"
@@ -43,14 +49,24 @@ export class Map extends Component {
                     </svg>
                 </Marker>
 
+                <Marker  longitude={data[data.length-1].longitude} latitude={data[data.length-1].latitude}>
+                    <svg
+                    height={SIZE}
+                    viewBox="0 0 24 24"
+                    style={{
+                        cursor: 'pointer',
+                        fill: '#d00',
+                        stroke: 'none',
+                        transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
+                    }}
+                    >
+                    <path d={ICON} />
+                    </svg>
+                </Marker>
+
+
                 <PolylineOverlay
-                points={[
-                    { latitude: 37.8025259, longitude: -122.4351431 },
-                    { latitude: 37.7896386, longitude: -122.421646 },
-                    { latitude: 37.7665248, longitude: -122.4161628 },
-                    { latitude: 37.7734153, longitude: -122.4577787 },
-                    { latitude: 37.7948605, longitude: -122.4596065 }
-                ]} />
+                points={data} />
                 </ReactMapGL>
             </div>
         )
