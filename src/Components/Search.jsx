@@ -32,6 +32,7 @@ export class Search extends Component {
         LocationIQ.search(address).then(
         response => {
             this.setState({coords:[{lat: Number(response[0].lat), long:Number(response[0].lon)}]}) ;
+            this.setState({rsp:true})
             console.log(this.state.coords)
 
         },
