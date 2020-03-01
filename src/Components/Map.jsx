@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import ReactMapGL, {LinearInterpolator, FlyToInterpolator} from 'react-map-gl';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {Marker} from 'react-map-gl';
 import d3 from 'd3-ease';
 import PolylineOverlay from './PolylineOverlay'
 
-const SIZE = 20
+const SIZE = 25
 const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
   c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
   C20.1,15.8,20.2,15.8,20.2,15.7z`;
@@ -29,8 +30,8 @@ export class Map extends Component {
 
         const viewport = {
             ...this.state.viewport,
-            longitude: this.props.coords[0].long,
-            latitude: this.props.coords[0].lat,
+            longitude: this.props.coords[this.props.coords.length-1].long,
+            latitude: this.props.coords[this.props.coords.length-1].lat,
             zoom: 14,
             transitionDuration: 5000,
             transitionInterpolator: new FlyToInterpolator(),
@@ -42,14 +43,9 @@ export class Map extends Component {
 }
     
     render() {
-        var data = [
-            { latitude: 37.8025259, longitude: -122.4351431 },
-            { latitude: 37.7896386, longitude: -122.421646 },
-            { latitude: 37.7665248, longitude: -122.4161628 },
-            { latitude: 37.7734153, longitude: -122.4577787 },
-            { latitude: 37.7948605, longitude: -122.4596065 }
-        ]
-        console.log(this.state.viewport.longitude)
+
+        console.log(this.props.coords)
+        var points = this.props.coords
         return (
             <div>
                 <ReactMapGL
@@ -58,37 +54,14 @@ export class Map extends Component {
                     mapboxApiAccessToken={"pk.eyJ1IjoiYW50b25kaWxvbiIsImEiOiJjazZmNHA1bWoxNHoyM29td2k1MjVncm16In0.k99zSrB13Geh7G_bU-GZzw"}
                     onViewportChange={(viewport) => this.setState({viewport})}
                 >
-                    <Marker  longitude={data[0].longitude} latitude={data[0].latitude}>
-                    <svg
-                    height={SIZE}
-                    viewBox="0 0 24 24"
-                    style={{
-                        cursor: 'pointer',
-                        fill: '#d00',
-                        stroke: 'none',
-                        transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
-                    }}
-                    >
-                    <path d={ICON} />
-                    </svg>
-                </Marker>
 
-                <Marker  longitude={data[data.length-1].longitude} latitude={data[data.length-1].latitude}>
-                    <svg
-                    height={SIZE}
-                    viewBox="0 0 24 24"
-                    style={{
-                        cursor: 'pointer',
-                        fill: '#d00',
-                        stroke: 'none',
-                        transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
-                    }}
-                    >
-                    <path d={ICON} />
-                    </svg>
-                </Marker>
+                    {points.map((point, index) => (
+                        <Marker  longitude={point.long} latitude={point.lat} key={index}>
+                            <LocationOnIcon style={{fontSize:'30px', transform: `translate(${-SIZE*1.1 / 2}px,${-SIZE}px)`, color:'red'}}/>
+                        </Marker>
+                    ))}
 
-                <PolylineOverlay points={data} />
+                <PolylineOverlay points={this.props.coords} />
                 </ReactMapGL>
             </div>
         )
