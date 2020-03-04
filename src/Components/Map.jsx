@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactMapGL, {LinearInterpolator, FlyToInterpolator} from 'react-map-gl';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import {Marker} from 'react-map-gl';
-import d3 from 'd3-ease';
+import d3 from 'd3';
 import PolylineOverlay from './PolylineOverlay'
 
 const SIZE = 25
@@ -56,12 +56,12 @@ export class Map extends Component {
                 >
 
                     {points.map((point, index) => (
-                        <Marker  longitude={point.long} latitude={point.lat} key={index}>
+                        <Marker  longitude={point.long} latitude={point.lat} key={index} zIndex={10}>
                             <LocationOnIcon style={{fontSize:'30px', transform: `translate(${-SIZE*1.1 / 2}px,${-SIZE}px)`, color:'red'}}/>
                         </Marker>
                     ))}
 
-                <PolylineOverlay points={this.props.coords} />
+                <PolylineOverlay points={this.props.coords} zIndex={-2}/>
                 </ReactMapGL>
             </div>
         )
