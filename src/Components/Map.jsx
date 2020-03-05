@@ -10,7 +10,6 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
   c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
   C20.1,15.8,20.2,15.8,20.2,15.7z`;
 
-
 export class Map extends Component {
     state= {
         viewport : {
@@ -24,7 +23,6 @@ export class Map extends Component {
     };
 
     componentWillReceiveProps(){
-
        if (this.props.coords.length && !this.state.upd){
         console.log(this.props.coords);
 
@@ -39,12 +37,9 @@ export class Map extends Component {
         };
         this.setState({viewport});
     }
-
 }
     
     render() {
-
-        console.log(this.props.coords)
         var points = this.props.coords
         return (
             <div>
@@ -54,7 +49,6 @@ export class Map extends Component {
                     mapboxApiAccessToken={"pk.eyJ1IjoiYW50b25kaWxvbiIsImEiOiJjazZmNHA1bWoxNHoyM29td2k1MjVncm16In0.k99zSrB13Geh7G_bU-GZzw"}
                     onViewportChange={(viewport) => this.setState({viewport})}
                 >
-
                     {points.map((point, index) => (
                         <Marker  longitude={point.long} latitude={point.lat} key={index} zIndex={10}>
                             <LocationOnIcon style={{fontSize:'30px', transform: `translate(${-SIZE*1.1 / 2}px,${-SIZE}px)`, color:'red'}}/>

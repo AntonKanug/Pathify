@@ -16,16 +16,6 @@ import Map from './Map'
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 LocationIQ.init("dec43a4fbe212b");
 
-// // set response language. Defaults to english.
-// LocationIQ.setLanguage("en");
-
-// // set response region. Its optional.
-// // A Geocoding request with region=es (Spain) will return the Spanish city.
-// LocationIQ.setRegion("es");
-
-// // Enable or disable logs. Its optional.
-// LocationIQ.enableDebug();
-
 export class Search extends Component {
     state= {coords:[], coordsName:[], text:'',rsp:false}
     
@@ -34,8 +24,6 @@ export class Search extends Component {
         response => {
             this.setState({coords:this.state.coords.concat({lat: Number(response[0].lat), long:Number(response[0].lon)}), coordsName: this.state.coordsName.concat(address) }) ;
             this.setState({rsp:!this.state.rsp})
-            console.log(this.state.coords)
-
         },
         error => {
             console.error(error);
@@ -43,7 +31,6 @@ export class Search extends Component {
         );}
 
     render() {
-        console.log(this.state.coords)
         return (
             <div>
             <div style={{width:'450px', position:'absolute', zIndex:1, margin:'30px'}}>
