@@ -30,6 +30,11 @@ export class Search extends Component {
         }
         );}
 
+        addLoc = () =>{
+            if(!this.state.coordsName.includes(this.state.text))
+                this.convert(this.state.text)
+        }
+
     render() {
         return (
             <div>
@@ -39,13 +44,20 @@ export class Search extends Component {
                     <MenuIcon />
                 </IconButton>
                 <InputBase
+                     type="text"
                     style={{width:'300px', opacity:1, fontSize:'16px'}}
                     placeholder="Search Pathify"
                     inputProps={{ 'aria-label': 'Enter Points' }}
                     onChange={(e) => this.setState({text:e.target.value})}
+                    onKeyPress={e => {
+                        if (e.key === 'Enter') {
+                          this.addLoc();
+                          e.preventDefault();
+                        }
+                      }}
     
                 />
-                <IconButton  aria-label="search"onClick={() => !this.state.coordsName.includes(this.state.text) ? this.convert(this.state.text): null} style={{marginRight:"10px"}}>
+                <IconButton  aria-label="search" onClick={() =>this.addLoc()} style={{marginRight:"10px"}}>
                     <AddIcon />
                 </IconButton>
                 <Divider orientation="vertical" style={{display:'inline-block', color:'black',height: '30px', margin:'-10px'}}/>
