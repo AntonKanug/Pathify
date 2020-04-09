@@ -11,8 +11,8 @@ export class Map extends Component {
         viewport:{
             width: "100%",
             height: "100vh",
-            latitude: 27.6648,
-            longitude: -81.5158,
+            latitude: 39.5501,
+            longitude: -105.7821,
             zoom: 6,
             upd: false  
         }

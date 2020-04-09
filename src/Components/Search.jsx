@@ -19,13 +19,13 @@ import CloseIcon from '@material-ui/icons/Close';
 LocationIQ.init("dec43a4fbe212b");
 
 export class Search extends Component {
-    state={coords:[], coordsName:[], text:'',loading:false, path:[]}
+    state={coords:[], coordsName:[], text:'',loading:false, rsp:false,path:[],upda:false}
     
     convert = (address) => { 
         LocationIQ.search(address).then(
         response => {
             this.setState({coords:this.state.coords.concat({lat: Number(response[0].lat), long:Number(response[0].lon)}), coordsName: this.state.coordsName.concat(address) }) ;
-            this.setState({rsp:!this.state.rsp})
+            this.setState({false:!this.state.false})
         },
         error => {
             console.error(error);
@@ -39,17 +39,17 @@ export class Search extends Component {
     }
 
     submit = () => {
-        axios.post('http://localhost:8080/test',
+        axios.post('https://pathify.herokuapp.com/path',
              this.state.coords
         ).then((res) => 
-            this.setState({path:res.data,loading:false}))
+            this.setState({path:res.data,loading:false,rsp:true}))
         .catch(function (error) {
             console.log(error);
         });
     }
 
     clear = () => {
-        this.setState({coords:[], coordsName:[], text:'',loading:false, path:[]})
+        this.setState({coords:[], coordsName:[], text:'',loading:false, rsp:false,path:[]})
     }
 
     render() {
@@ -102,6 +102,25 @@ export class Search extends Component {
                         </IconButton>}
                     />       
                 </Snackbar>
+
+                <Snackbar
+                style={{fontFamily:'Avenir, Nunito Sans, sans-serif', fontWeight:'900'}}
+                anchorOrigin={{vertical: 'bottom', horizontal: 'right'}}
+                variant="error"
+                autoHideDuration={6000}
+                open={this.state.rsp}
+                >
+                <SnackbarContent style={{backgroundColor:'rgb(80, 209, 0)',fontFamily:'Avenir, Nunito Sans, sans-serif', fontWeight:'900', fontSize: 16}}
+                message="Success, Optimal Path Found!"
+                action={ <IconButton
+                    key="close"
+                    aria-label="close"
+                    onClick={() => this.setState({rsp:false})}
+                    ><CloseIcon style={{color:'white'}}/>
+                    </IconButton>}
+                />
+            </Snackbar>
+
             </Paper>
 
             {this.state.coordsName.length? <Destinations coords={this.state.coordsName}/>: null}
