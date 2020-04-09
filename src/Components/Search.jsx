@@ -12,12 +12,13 @@ import Geocode from "react-geocode";
 import LocationIQ from 'react-native-locationiq';
 import Destinations from './Destinations'
 import Map from './Map'
+import axios from 'axios';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 LocationIQ.init("dec43a4fbe212b");
 
 export class Search extends Component {
-    state= {coords:[], coordsName:[], text:'',rsp:false}
+    state= {coords:[], coordsName:[], text:'',rsp:false, path:[]}
     
     convert = (address) => { 
         LocationIQ.search(address).then(
@@ -30,10 +31,22 @@ export class Search extends Component {
         }
         );}
 
-        addLoc = () =>{
-            if(!this.state.coordsName.includes(this.state.text))
-                this.convert(this.state.text)
-        }
+    addLoc = () =>{
+        if(!this.state.coordsName.includes(this.state.text))
+            this.convert(this.state.text)
+    }
+
+    submit = () => {
+        axios.post('http://localhost:8080/test',
+             this.state.coords
+        ).then( (res) => {
+            console.log(res)
+            this.setState({path:res.data})
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 
     render() {
         return (
@@ -62,13 +75,13 @@ export class Search extends Component {
                 </IconButton>
                 <Divider orientation="vertical" style={{display:'inline-block', color:'black',height: '30px', margin:'-10px'}}/>
                 <IconButton color="primary" aria-label="directions" style={{marginLeft:"10px"}}>
-                    <DirectionsIcon />
+                    <DirectionsIcon onClick={() =>this.submit()}/>
                 </IconButton>
             </Paper>
             {this.state.coordsName.length? <Destinations coords={this.state.coordsName}/>: null}
 
             </div>
-                <Map coords={this.state.coords}/>
+                <Map coords={this.state.path} points={this.state.coords}/>
             </div>
         )
     }

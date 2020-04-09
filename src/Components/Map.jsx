@@ -23,13 +23,13 @@ export class Map extends Component {
     };
 
     componentWillReceiveProps(){
-       if (this.props.coords.length && !this.state.upd){
-        console.log(this.props.coords);
+       if (this.props.points.length && !this.state.upd){
+        console.log(this.props.points);
 
         const viewport = {
             ...this.state.viewport,
-            longitude: this.props.coords[this.props.coords.length-1].long,
-            latitude: this.props.coords[this.props.coords.length-1].lat,
+            longitude: this.props.points[this.props.points.length-1].long,
+            latitude: this.props.points[this.props.points.length-1].lat,
             zoom: 14,
             transitionDuration: 5000,
             transitionInterpolator: new FlyToInterpolator(),
@@ -49,9 +49,9 @@ export class Map extends Component {
                     mapboxApiAccessToken={"pk.eyJ1IjoiYW50b25kaWxvbiIsImEiOiJjazZmNHA1bWoxNHoyM29td2k1MjVncm16In0.k99zSrB13Geh7G_bU-GZzw"}
                     onViewportChange={(viewport) => this.setState({viewport})}
                 >
-                    {points.map((point, index) => (
+                    {this.props.points.map((point, index) => (
                         <Marker  longitude={point.long} latitude={point.lat} key={index} zIndex={10}>
-                            <LocationOnIcon style={{fontSize:'30px', transform: `translate(${-SIZE*1.1 / 2}px,${-SIZE}px)`, color:'red'}}/>
+                            <LocationOnIcon style={{fontSize:'30px', transform: `translate(${-SIZE*1.1 / 2}px,${-SIZE}px)`, color:'red'}}/> 
                         </Marker>
                     ))}
 
