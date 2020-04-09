@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Map from './Map'
 import Search from './Search'
 import './App.css'
 

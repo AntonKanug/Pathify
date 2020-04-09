@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 export class Destinations extends Component {
     render() {
         return (
