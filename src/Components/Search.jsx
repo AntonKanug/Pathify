@@ -38,7 +38,7 @@ export class Search extends Component {
     }
 
     submit = () => {
-        axios.post('https://pathify.herokuapp.com/path',
+        axios.post('https://pathify.herokuapp.com/api/path',
              this.state.coords
         ).then((res) => 
             this.setState({path:res.data[0].points,loading:false,rsp:true,dist: this.state.dist.concat(res.data[1].distances)}))
