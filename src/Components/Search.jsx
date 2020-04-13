@@ -14,12 +14,11 @@ import Map from './Map'
 import axios from 'axios';
 import CloseIcon from '@material-ui/icons/Close';
 
-
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 LocationIQ.init("dec43a4fbe212b");
 
 export class Search extends Component {
-    state={coords:[], coordsName:[], text:'',loading:false, rsp:false,path:[],upda:false}
+    state={coords:[], coordsName:[], dist:[{"distance":0.0}],text:'',loading:false, rsp:false,path:[],upda:false}
     
     convert = (address) => { 
         LocationIQ.search(address).then(
@@ -42,7 +41,7 @@ export class Search extends Component {
         axios.post('https://pathify.herokuapp.com/path',
              this.state.coords
         ).then((res) => 
-            this.setState({path:res.data,loading:false,rsp:true}))
+            this.setState({path:res.data[0].points,loading:false,rsp:true,dist: this.state.dist.concat(res.data[1].distances)}))
         .catch(function (error) {
             console.log(error);
         });
@@ -51,8 +50,9 @@ export class Search extends Component {
     clear = () => {
         this.setState({coords:[], coordsName:[], text:'',loading:false, rsp:false,path:[]})
     }
-
     render() {
+        console.log(this.state.dist)
+
         return (
             <div>
             <div style={{width:'450px', position:'absolute', zIndex:1, margin:'30px'}}>
@@ -123,7 +123,7 @@ export class Search extends Component {
 
             </Paper>
 
-            {this.state.coordsName.length? <Destinations coords={this.state.coordsName}/>: null}
+            {this.state.coordsName.length? <Destinations coords={this.state.coordsName} dist={this.state.dist}/>: null}
 
             </div>
                 <Map coords={this.state.path} points={this.state.coords}/>
