@@ -9,6 +9,7 @@ https://pathify-map.web.app/
 
 Built using: `React, MapBox, React-Map-GL, Geocode & Firebase`
 
+Demo: https://www.youtube.com/watch?v=lE599IFsKck
 
 ## Backend
 
