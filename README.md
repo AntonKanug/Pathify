@@ -1,6 +1,6 @@
 # Pathify
 
-A web application that finds the shortest path between multiple destinations using Dijkstra's algorithm on 100,000+ nodes for state of Colorado.
+A web application that finds the shortest path between multiple destinations using Dijkstra's algorithm on 1,000,000+ edges for state of Colorado.
 
 
 ## Application
